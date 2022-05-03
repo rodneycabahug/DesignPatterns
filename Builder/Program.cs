@@ -21,12 +21,19 @@ class Program
 
 internal class Product
 {
-    private readonly List<string> _parts = new List<string>();
+    private readonly string _name;
+    private readonly List<string> _parts;
+
+    internal Product(string name)
+    {
+        _name = name;
+        _parts = new List<string>();
+    }
 
     internal void Show()
     {
         Console.WriteLine("------------------");
-        Console.WriteLine("Product Parts List");
+        Console.WriteLine($"{_name} Parts:");
         foreach (var part in _parts)
             Console.WriteLine(part);
         Console.WriteLine("------------------");
@@ -38,32 +45,40 @@ internal class Product
 
 internal class ConcreteBuilderTwo : Builder
 {
-    private readonly Product _product = new Product();
+    internal ConcreteBuilderTwo()
+    {
+        _product = new Product("Product Two");
+    }
 
-    internal override void BuildPartA() => _product.AddPart("ProductTwo: PartA");
+    internal override void BuildPartA() => _product.AddPart("PartA");
 
-    internal override void BuildPartB() => _product.AddPart("ProductTwo: PartB");
+    internal override void BuildPartB() => _product.AddPart("PartB");
 
-    internal override void BuildPartC() => _product.AddPart("ProductTwo: PartB");
+    internal override void BuildPartC() => _product.AddPart("PartC");
 
     internal override Product GetResult() => _product;
 }
 
 internal class ConcreteBuilderOne : Builder
 {
-    private readonly Product _product = new Product();
+    internal ConcreteBuilderOne()
+    {
+        _product = new Product("Product One");
+    }
 
-    internal override void BuildPartA() => _product.AddPart("ProductOne: PartA");
+    internal override void BuildPartA() => _product.AddPart("PartX");
 
-    internal override void BuildPartB() => _product.AddPart("ProductOne: PartB");
+    internal override void BuildPartB() => _product.AddPart("PartY");
 
-    internal override void BuildPartC() => _product.AddPart("ProductOne: PartB");
+    internal override void BuildPartC() => _product.AddPart("PartZ");
 
     internal override Product GetResult() => _product;
 }
 
 internal abstract class Builder
 {
+    internal Product _product;
+
     internal abstract Product GetResult();
 
     internal abstract void BuildPartA();
